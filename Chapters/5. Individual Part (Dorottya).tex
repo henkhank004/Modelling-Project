@@ -34,17 +34,11 @@ Regarding the vectors, the number of new infected vectors is $\beta_V \frac{I_H}
 We have defined the number of individuals moving from one compartment to another. Thus, we can model the dynamics of the system as follows.
 
 \begin{equation}
-    \frac{dS_H}{dt} = \frac{R_H}{r} - \beta_H \frac{I_V}{N_V} S_H
-\end{equation}
-\begin{equation}
-    \frac{dI_H}{dt} = \beta_H \frac{I_V}{N_V} S_H - \frac{I_H}{d}
-\end{equation}
-\begin{equation}
-    \frac{dR_H}{dt} = \frac{I_H}{d} - \frac{R_H}{r}
-\end{equation}
-\begin{equation}
-    \frac{dS_V}{dt} = -\beta_V \frac{I_H}{N_H} S_V
-\end{equation}
-\begin{equation}
-    \frac{dI_V}{dt} = \beta_V \frac{I_H}{N_H} S_V
+\begin{cases}
+    {\frac{dS_H}{dt} = \frac{R_H}{r} - \beta_H \frac{I_V}{N_V} S_H}\\
+    {\frac{dI_H}{dt} = \beta_H \frac{I_V}{N_V} S_H - \frac{I_H}{d}}\\
+    {\frac{dR_H}{dt} = \frac{I_H}{d} - \frac{R_H}{r}}\\
+    {\frac{dS_V}{dt} = -\beta_V \frac{I_H}{N_H} S_V}\\
+    {\frac{dI_V}{dt} = \beta_V \frac{I_H}{N_H} S_V}
+\end{cases}
 \end{equation}
