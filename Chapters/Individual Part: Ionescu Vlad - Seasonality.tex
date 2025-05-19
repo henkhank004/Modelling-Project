@@ -1,0 +1,68 @@
+
+\section{Individual Part: Ionescu Vlad - Seasonality}
+
+The spread of some vector spread diseases, such as Dengue Fever, are affected by seasonal changes through the year. This is due to periodic changes in the population of vectors over the duration of a year. This change can be modeled by considering the population of mosquitoes as a periodic function, specifically a general sinusoidal function.
+\subsection*{Model variables}
+\begin{itemize}
+    \item $N_V(t)$ - population of vectors at time t. 
+    \item $b(t)$ - number of births of vectors at time t.
+    \item $d(t)$ - number of deaths of vectors at time t.
+\end{itemize}
+\subsection*{Model parameters}
+\begin{itemize}
+    \item $N_{V_{min}}$ - the minimum population of vectors in a year.
+    \item $A$ - the amplitude of the vector population change.
+    \item $T$ - the period of seasonal change in vector population.
+    \item $\varphi$ - the phase by which the vector population function is shifted
+    \item $m$ - vector mortality
+\end{itemize}
+\subsection*{Assumptions}
+On top of all the assumptions made by the standard SI-SI model, we also assume the following:
+\begin{itemize}
+    \item The vector population is perfectly periodic
+    \item The vector population change follows a sinusoidal pattern
+    \item Vector mortality remains constant
+    \item All vectors are born susceptible
+\end{itemize}
+\subsection*{Derivation and system of equations}
+We would like the population of vectors to change in a periodic, sinusoidal manner, to reflect the change in population over the year. As such we take $N_V$ to be a general sinusoidal function greater than 0 at any time. As such we will have that:
+$$
+N_V(t) = N_{V_{min}} + A \cdot (1+\cos(\frac{2\pi}{T}t + \varphi))
+$$
+To implement this into our model we need to define the change in population, as given by birth and death rate. We can assume that the lifespan of out vectors is independent of the time of year and as such that the death rate is a constant multiple of the population, and that the birth rate is dependent on the time of year, since the environment would be more propitious for reproduction during certain seasons. We first find that the change in population is:
+$$
+N_V'(t) = - A \frac{2\pi}{T}\sin(\frac{2\pi}{T}t + \varphi)
+$$
+Take $b(t)$ to be the birth rate and $d(t)$ to be the death rate of the vectors. Then:
+$$
+N_V'(t) = b(t) - d(t)
+$$
+Since we assume the death rate to be a constant multiple of the population, let $m \in [0,1]$ be the mortality factor, then:
+$$
+d(t) = m \cdot N_V(t)
+$$
+We can introduce this into our equations for the change in vector population to get:
+$$
+ - A \frac{2\pi}{T}\sin(\frac{2\pi}{T}t + \varphi) = b(t) - mN_V
+$$
+Then the birth rate is given by:
+$$
+b(t) = mN_V - A \frac{2\pi}{T}\sin(\frac{2\pi}{T}t + \varphi)
+$$
+Since $N_V(t) = S_v(T) + I_V(t)$, we can split the death rate into the death rates for susceptible and infectious vectors, $d_S(t) = mS_V(t)$, $d_I(t) = mI_V(t)$, where $d(t) = d_I(t) + d_S(t)$.\\
+Assuming no congenital transmission, all vectors are born susceptible. As such we can model the change in susceptible and infective vectors as:
+\begin{equation*}
+    \begin{split}
+        S_V' & = b(t)-\beta_V \bigg( \frac{I_H}{N_H}\bigg)S_V - d_S(t) \\
+        I_V' & = +\beta_V \bigg( \frac{I_H}{N_H}\bigg)S_V - d_I(t)
+    \end{split}
+\end{equation*}
+Implementing these results into our system of differential equations we get:
+\begin{equation*}
+    \begin{split}
+        S_H' & = -\beta_H \bigg( \frac{I_V}{N_V}\bigg)S_H\\
+        I_H' & = +\beta_H \bigg( \frac{I_V}{N_V}\bigg)S_H\\
+        S_V' & = - A \frac{2\pi}{T}\sin(\frac{2\pi}{T}t + \varphi) -\beta_V \bigg( \frac{I_H}{N_H}\bigg)S_V + mI_V \\
+        I_V' & = +\beta_V \bigg( \frac{I_H}{N_H}\bigg)S_V - mI_V
+    \end{split}
+\end{equation*}

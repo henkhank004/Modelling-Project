@@ -1,0 +1,41 @@
+\newpage
+\section{Individual Part: Maja Cubrzyńska - Vaccination Rate}
+We will extend the SI-SI model with a vaccination rate. We will discuss how it influences the base equations. We assume that the vaccine starts working immediately after administration and that vaccinated may be only those from the susceptible compartment. Moreover, the considered vaccine is not perfect so it works only with some probability $p$ and protects a human for time $y$. 
+\subsection*{Model Parameters and Variables}
+\begin{itemize}
+    \item $V_H(t)$: Vaccinated hosts.
+    \item $v$: Vaccination rate (average number of vaccinations per unit time).
+    \item $p$: Probability of the vaccine being effective. Note that $p \in [0,1]$.
+    \item $y$: Time in which the vaccine remains effective.
+    \item $\frac{1}{y}$: The rate of leaving the vaccinated compartment.
+    \item Parameters from the standard SI-SI model will be used here as well.
+\end{itemize}
+\subsection*{Working with the equations}
+For the purposes of the assignment, we introduce a third compartment: $V_H(t)$. Vaccinated hosts will be placed there, but only for time y, the period in which the vaccine remains effective so that the hosts are immune.
+
+Take the susceptible hosts: $\frac{dS_H}{dt} = - \beta_{H} \frac{I_V}{N_V} S_H$. We find that the rate at which susceptibles are vaccinated is $vS_H$. Moreover, $(1-p)vS_H$ vaccinations are unsuccessful. Note that $\frac{1}{y} V_H$ are leaving the vaccinated compartment. Hence, we obtain:
+\begin{equation}
+\begin{aligned}
+\frac{dS_H}{dt} 
+    &= - \beta_{H} \frac{I_V}{N_V} S_H - \nu S_H + (1 - p)\nu S_H + \frac{1}{y} V_H \\
+    &= - \beta_{H} \frac{I_V}{N_V} S_H - p \nu S_H + \frac{1}{y} V_H .
+\end{aligned}
+\end{equation}
+Now consider the vaccinated hosts. $pvS_H$ vaccinations are successful but $\frac{1}{y} V_H$ hosts are leaving the vaccinated compartment, giving:
+\begin{equation}
+\frac{dV_H}{dt} = p \nu S_H - \frac{1}{y} V_H.
+\end{equation}
+The vaccination does not influence the infected hosts so the equation remains unchanged. Neither does it influence the vectors. Therefore, we have:
+\begin{equation}
+\frac{dI_H}{dt} = \beta_{H} \frac{I_V}{N_V} S_H,
+\end{equation}
+\begin{equation}
+\frac{dS_V}{dt} = - \beta_{V} \frac{I_H}{N_H} S_V,
+\end{equation}
+\begin{equation}
+\frac{dI_V}{dt} = \beta_{V} \frac{I_H}{N_H} S_V.
+\end{equation}
+
+
+
+

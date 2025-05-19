@@ -1,0 +1,45 @@
+\begingroup
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5\baselineskip}
+\section{Behavioural Changes of Hosts and Vectors (Bartek)}
+In several cases, vector-borne diseases can modify the behaviour of the host or a vector [ref]. For example, rabies can make the infected animals more aggressive and thus increase their contact rates with others. Thus, it would be interesting to model this infection-caused behavioural change. 
+
+In our base model, the contact rate was represented by an average rate of host-vector contacts $\gamma \, \, \mathrm{[\frac{contacts}{host \cdot vector \cdot day}}]$. To include modified contact rates without changing any of the assumptions, we assign individual contact rates $\gamma_i, i \in\{S_H, I_H, S_V, I_V\}$ to each compartment, and redefine the original $\gamma$ as a weighted-average of $\gamma_i$s:
+
+\begin{equation}
+    \gamma \equiv\gamma(t) = \gamma_{S_H} \left( \frac{S_H(t)}{N_H+ N_V}  \right) + \gamma_{I_H} \left( \frac{I_H(t)}{N_H + N_V} \right) + \gamma_{S_V} \left( \frac{S_V(t)}{N_H + N_V} \right) + \gamma_{I_V} \left( \frac{I_V(t)}{N_H + N_V} \right)
+\end{equation}
+
+Where $S_H$, $S_V$ mean susceptible population of vectors and hosts and $I_H, I_V$ mean infected hosts and vectors respectively. We divided by $N_H + N_V$ because the contacts occur within combined population of vectors and hosts. 
+
+%This model intuitively makes sense since a population composed of a greater fraction of, say, rarely-interacting hosts or vectors will, on average, yield lower host-vector contact rate $\gamma$, than the population with more frequently-interacting members. 
+
+Note that we can define individual rates to be a constant parameter or a function. For the latter, more interesting case we will assume that the host 
+(or vector) population is composed of "intelligent" individuals who "keep track" of the number of infections of their kind and limit interactions when the number of infected are too high. The decrease in the rate constant will be described in an exponential fashion inspired by the Arrhenius equation from chemical kinetics:
+
+\begin{equation}
+\gamma_i(t) = \gamma_{i, 0}\left(1 - \exp{\left({-\frac{A_i}{p_i(t)}}\right)} \right)
+\end{equation}
+
+where $p_i(t)$ is an individual "perception function" describing how noticeable a given number of infections is, and $A_i$ is an individual constant (dimensionless) modifying the strength of the rate-decreasing behaviour. We can express the change in $p(t)$ using  Weber-Fechner law [ref] and use the chain rule to obtain explicit time dependence:
+
+\begin{equation}
+    \frac{\mathrm{d}p_i}{\mathrm{d}I}  = \frac{\alpha}{I} = \frac{\mathrm{d}p_i}{\mathrm{d}t}\cdot \frac{\mathrm{d}t}{\mathrm{d}I} \quad \Longrightarrow \quad \frac{\mathrm{d}p_i}{\mathrm{d}t} = \frac{\alpha_i}{I}\frac{\mathrm{d}I}{\mathrm{d}t} 
+\end{equation}
+
+where $I$ is the number of infected in either host's or vector's population, and $\alpha>0$ is a dimensionless proportionality constant describing how sensitive host's or vector's perception is to a change in the number of infections. For simplicity, we will assume that $p(t)$ is the same for infected and susceptible individuals, which only adds two equations to our system: 
+
+\begin{equation}
+\left\{
+\begin{array}{cl}
+   S_H '(t) & = \,\,-\frac{1}{N_V + N_H}\left(\gamma_{S_H}S_H(t)  + \gamma_{I_H} I_H(t) + \gamma_{S_V} S_V(t) + \gamma_{I_V} I_V(t) \right) N_VP_{V\to H} \left(\frac{I_V}{N_V }\right)S_H  \\
+     I_H'(t)& = \,\, \frac{1}{N_V + N_H}\left(\gamma_{S_H}S_H(t)  + \gamma_{I_H} I_H(t) + \gamma_{S_V} S_V(t) + \gamma_{I_V} I_V(t) \right) N_VP_{V\to H} \left(\frac{I_V}{N_V }\right)S_H \\
+     S_V'(t)& = \,\, -\frac{1}{N_V + N_H}\left(\gamma_{S_H}S_H(t)  + \gamma_{I_H} I_H(t) + \gamma_{S_V} S_V(t) + \gamma_{I_V} I_V(t) \right) N_HP_{H\to V} \left(\frac{I_H}{N_H }\right)S_H \\
+     I_V'(t)& = \,\, \frac{1}{N_V + N_H}\left(\gamma_{S_H}S_H(t)  + \gamma_{I_H} I_H(t) + \gamma_{S_V} S_V(t) + \gamma_{I_V} I_V(t) \right) N_HP_{H\to V} \left(\frac{I_H}{N_H }\right)S_H \\
+     p_{H}'(t)& = \,\, \frac{\alpha_H}{I_H}I_H'(t) \\
+     p_V'(t) & = \,\, \frac{\alpha_V}{I_V}I_V'(t)
+\end{array}
+\right.
+\end{equation}
+
+\endgroup

@@ -1,0 +1,57 @@
+\section{Individual Part: Birth-and-death vectors (Clemente Concha Kostin)}
+\subsubsection*{Introduction and Motivation}
+This model analyzes vector population dynamics ($S_v, I_v$), focusing on birth ($B_v$), death ($D_v$), and infection processes. Human infectious pressure is assumed constant to isolate how these demographics impact vector infection status.
+
+\subsection*{Assumptions}
+
+\begin{itemize}[nosep,leftmargin=*,topsep=0.5ex] 
+    \item Vectors are always born susceptible.
+    \item Vectors do not recover and remain infectious for life.
+    \item Vector birth rate is proportional to the total current vector population.
+    \item Vectors die at a constant per capita natural death rate.
+    \item The force of infection on vectors (per capita rate of new vector infections) is constant.
+\end{itemize}
+
+\subsection*{Model Variables}
+\noindent
+\begin{tabularx}{\linewidth}{@{}l X@{}} % 
+\toprule
+\textbf{Variable} & \textbf{Description} \\
+\midrule
+$S_v(t)$ & Number of susceptible vectors at time $t$. \\
+$I_v(t)$ & Number of infectious vectors at time $t$. \\
+$N_v(t)$ & Total vector population, $N_v(t) = S_v(t) + I_v(t)$. \\
+\bottomrule
+\end{tabularx}
+
+\subsection*{Model Parameters}
+\noindent 
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Parameter} & \textbf{Description} \\
+\midrule
+$B_v$       & Per capita birth rate of vectors (total new vectors: $B_v N_v$). \\
+$D_v$       & Per capita natural death rate of vectors. \\
+$\lambda_v^*$ & Constant force of infection on vectors (per capita rate). \\
+\bottomrule
+\end{tabularx}
+
+\subsection*{System of Differential Equations}
+The dynamics of the vector population are described by:
+\begin{align} 
+\frac{dS_v}{dt} &= B_v N_v - \lambda_v^* S_v - D_v S_v \label{eq:clemente_dSv_simplified} \\
+\frac{dI_v}{dt} &= \lambda_v^* S_v - D_v I_v \label{eq:clemente_dIv_simplified}
+\end{align}
+New susceptible vectors are born at rate $B_v N_v$. Susceptible vectors get infected at rate $\lambda_v^* S_v$. Both $S_v$ and $I_v$ die at per capita rate $D_v$.
+\\\\
+The total vector population $N_v(t)$ changes according to:
+\begin{align*} % Using align* for unnumbered derivation
+\frac{dN_v}{dt} &= \frac{dS_v}{dt} + \frac{dI_v}{dt} \\
+               &= (B_v N_v - \lambda_v^* S_v - D_v S_v) + (\lambda_v^* S_v - D_v I_v) \\
+               &= B_v N_v - D_v S_v - D_v I_v \\
+               &= B_v N_v - D_v (S_v + I_v) \\
+               &= B_v N_v - D_v N_v = (B_v - D_v)N_v
+\end{align*}
+This core equation, $\frac{dN_v}{dt} = (B_v - D_v)N_v$, shows total vector population size is driven by its per capita birth ($B_v$) and death ($D_v$) rates. These demographics, with infection rate $\lambda_v^*$, determine the number of infectious vectors.
+
+% --- End of content for Chapters/3. Individual Part (Clemente).tex ---

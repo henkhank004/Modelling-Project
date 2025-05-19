@@ -1,0 +1,60 @@
+
+% - Explain the simplifying assumptions made in the simple SI-SI model.
+% - Using the simple SI-SI model as a starting point, what other important factors do you think need
+% to be considered in the model to make it more realistic? Which ones do you think are most
+% important? How would these factors affect the outcome predicted by the model?
+% - Pay particular attention and focus on those factors that you have chosen to address in Part II
+% below. Explain why you choose to focus on these factors.
+% II. Extended models (Individual Part) (1,5 points) [Weeks 2-4]
+% - Maximum length in report: 1 page per student
+% - From the factors you considered in Part I, each group member should choose one factor that
+% they then consider in greater detail. The student should then develop and propose a modified
+% or extended model (i.e., formulate it using a system of ODEs) that accounts for the factor you
+% have chosen. Explain how you came up with the model as well as any assumptions made.
+% Explain the meaning of all parameters and functions appearing in the model, and how these are
+
+
+\section{Introduction} \label{introduction}
+We will model a behaviour of a vector-borne disease. Firstly, we will introduce the SI-SI model and modify it using different extensions. Then we will choose one of them and (...)(to add later).
+\subsection{SI-SI model}
+We will now introduce the SI-SI model with its equations, assumptions and variables.
+We have four compartments: $S(A)$ corresponding to the susceptible hosts, $I(A)$ with the infected hosts, $S(V)$ for the susceptible vectors and $I(V)$ for the infectious vectors. They move between them.
+\subsubsection{Assumptions} \label{SISI-assumptions}
+\begin{itemize}
+    \item The total population is a constant $N$, $N = S(A)+I(A)$.
+    \item There is no immunity.
+    \item Humans and vectors are always born susceptible.
+    \item Vectors do not recover from infection and remain infectious for life.
+    \item On average, an infected person is infected for $d$ days.
+\end{itemize}
+\subsubsection{SI-SI model variables and parameters}
+\begin{itemize}
+    \item $S_h(t)$: Number of susceptible hosts at time $t$.
+    \item $I_h(t)$: Number of infectious hosts at time $t$.
+    \item $N_h(t) = S_h + I_h$: Total host population at time $t$.
+    \item $N_v(t) = S_v + I_v$: Total vector population at time $t$.
+    \item $S_v(t)$: Number of susceptible vectors at time $t$.
+    \item $I_v(t)$: Number of infectious vectors at time $t$.
+    \item $\beta_H$: Transmission rate from infected vectors to hosts.
+    \item $\beta_V$: Transmission rate from infected hosts to vectors.
+    \item $\gamma N_H$: Total number of bites per day. 
+    \item $\gamma N_V$: Total number of times per day that a person is bitten. 
+    \item $P_{V \to H}$: Probability that a single bite infects a person.
+    \item $P_{H \to V}$: Probability that a bite infects a mosquito.
+\end{itemize}
+Let $\beta_H = \gamma N_V P_{V \to H} \; [\text{1/day}]$. Then the total number of infected hosts per unit time equals $\beta_H \left( \frac{I_V}{N_V} \right) S_H$, while the total number of infected vectors per unit time equals $\beta_V \left( \frac{I_H}{N_H} \right) S_V$.
+\subsubsection{Final equations}
+\begin{equation}
+\frac{dS_H}{dt} = -\beta_{H} \frac{I_V}{N_V} S_H
+\end{equation}
+\begin{equation}
+\frac{dI_H}{dt} = \beta_{H} \frac{I_V}{N_V} S_H
+\end{equation}
+\begin{equation}
+\frac{dS_V}{dt} = -\beta_{V} \frac{I_H}{N_H} S_V
+\end{equation}
+\begin{equation}
+\frac{dI_V}{dt} = \beta_{V} \frac{I_H}{N_H} S_V
+\end{equation}
+
+

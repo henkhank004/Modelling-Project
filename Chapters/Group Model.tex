@@ -1,0 +1,145 @@
+\section{Group Model}
+% Based on the individually proposed models above, choose one factor that you would like to
+% consider as a group. As a group, develop and propose a modified model that accounts for the
+% factor you have chosen. This can be a simplified version of one of the models, or one that
+% combines two very simple models, or you can directly take one of the proposed models, and so
+% on.
+% - Explain the reason for your choice (e.g., relevance, feasibility, etc.).
+% - Clearly explain how you came to the model. State any assumptions and simplifications, and
+% explain the meaning of all parameters, functions, and variables in the system of ODEs.
+% - How would you obtain reasonably realistic values or estimates for the constants needed in the
+% model? Make sure to cite your sources. (Note: you will need this information for Part IV).
+% - Nondimensionalize your model.
+
+As a group, we decided to consider the \textbf{Immunity extension} which is introduced in section \ref{group}. We analyse the model as it is described in the individual part, without any modification.
+
+\subsection*{Motivation}
+
+When infected with a mosquito-borne disease, the immune system produces antibodies. This allows a person to gain immunity naturally. However, if there is no exposure to infection for a couple of years, the person can lose the immunity.
+
+The chosen model includes this phenomenon as individuals immediately move from the \textit{infected} compartment to the \textit{(recovered) immune} one. Furthermore, after a certain time they return to the \textit{susceptible} compartment as they lose immunity.
+
+Therefore, we believe that the extension is a relevant model for diseases such as malaria and dengue. In addition, thanks to its simplicity, it is feasible to analyse in this course. 
+
+\subsection{Vector and Disease Characteristics Modeled}
+We have chosen to focus on the model proposed by Dorottya Vaczy. This model describes the human (host) population dynamics using three compartments: Susceptible ($S_H$), Infected ($I_H$), and Recovered ($R_H$), with a flow $S_H \rightarrow I_H \rightarrow R_H \rightarrow S_H$ (hosts can move through susceptible, infected, and recovered states). For the mosquito (vector) population, the model employs a simpler Susceptible ($S_V$) to Infected ($I_V$) progression ($S_V \rightarrow I_V$), represented by the last two differential equations.
+\\\\
+Dengue fever presents complex immunological and transmission interactions that align pretty well with this mathematical model and its assumptions. Here we provide proof that dengue is well-suited to be modelled by this model:
+
+\begin{itemize}
+    \item \textbf{Vector-Borne Transmission}: Dengue is transmitted by female Aedes mosquitoes, primarily Aedes aegypti and, to a lesser extent, Aedes albopictus (https://www.who.int/emergencies/disease-outbreak-news/item/2023-DON498).
+    \begin{itemize}
+        \item \textit{Mathematical Representation}: This interaction is the cornerstone of the infection terms. Susceptible humans ($S_H$) become infected via contact with infected vectors ($I_V$), modeled by the term $\beta_H \frac{I_V}{N_V} S_H$ (affecting $\frac{dS_H}{dt}$ and $\frac{dI_H}{dt}$). Susceptible vectors ($S_V$) are infected by infected humans ($I_H$), modeled by $\beta_V \frac{I_H}{N_H} S_V$ (affecting $\frac{dS_V}{dt}$ and $\frac{dI_V}{dt}$).
+        \item \textit{Alignment with Model Assumptions}: This biological reality directly validates \textbf{Model Assumption 3} which states: "$S_H$ gets infected by $I_V$ and $S_V$ by $I_H$." The model's core transmission mechanism correctly reflects Dengue's transmission pathway.
+    \end{itemize}
+
+    \item \textbf{Lifelong Infection in Mosquitoes}: Once a mosquito ingests blood from a viremic human and becomes infected with the Dengue virus, it generally remains infected and capable of transmitting the virus for the rest of its life (https://www.who.int/emergencies/disease-outbreak-news/item/2023-DON498). The virus replicates within the mosquito; it does not appear significantly detrimental, allowing persistent infection (https://www.sciencedirect.com/science/article/abs/pii/S2214574515000036).
+    \begin{itemize}
+        \item \textit{Mathematical Representation}: Susceptible vectors ($S_V$) move to the infected state ($I_V$) via the term $\beta_V \frac{I_H}{N_H} S_V$ and never go back nor die. 
+        \item \textit{Alignment with Model Assumptions}: This persistence of infection in mosquitoes is precisely what \textbf{Model Assumption 2} ("as mosquitoes have a short lifespan, assume that they do not recover from the illness") captures. The biological fact of lifelong infection in Dengue vectors means the model's simplification of no recovery for $I_V$ is biologically accurate for this disease.
+    \end{itemize}
+
+    \item \textbf{Complex Host Immunity and Re-infection}: Dengue virus has four main serotypes (DENV-1 to DENV-4). Infection with one provides lifelong serotype-specific immunity (https://www.cdc.gov/dengue/about/index.html). However, cross-immunity to other serotypes after recovery is only temporary and partial (https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue), lasting from months to a few years (e.g., 1–3 years) (https://pmc.ncbi.nlm.nih.gov/articles/PMC3730691/). After this, individuals are susceptible to other serotypes (https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue).
+    \begin{itemize}
+        \item \textit{Mathematical Representation and Alignment with Model Assumptions}:
+            \begin{itemize}
+                \item \textit{Infection and Recovery Duration}: Humans become infected ($S_H \rightarrow I_H$) via $\beta_H \frac{I_V}{N_V} S_H$. They then recover ($I_H \rightarrow R_H$) at a rate $\frac{1}{d}$, meaning they spend an average of '$d$' days in $I_H$. This directly corresponds to \textbf{Model Assumption 4} ("an infected person is infected for $d$ days on average"). This '$d$' would represent the viremic period during which they are infectious and experience symptoms. The transition to $R_H$ also aligns with \textbf{Model Assumption 1} ("every host is able to recover... and then they gain immunity").
+                \item \textit{Waning Immunity and Re-susceptibility}: The crucial Dengue feature of temporary cross-serotype immunity, followed by susceptibility to *other* serotypes, is captured by the model's $R_H \rightarrow S_H$ transition. This occurs at a rate $\frac{1}{r}$, meaning individuals spend an average of '$r$' days in the $R_H$ state before returning to $S_H$. This is precisely what is stated in \textbf{Model Assumption 5} ("a recovered person loses immunity after $r$ days on average and becomes susceptible again"). For Dengue, this assumption simplifies the complex multi-serotype reality into a single "recovered but temporarily immune" state ($R_H$) and a return to a general susceptible state ($S_H$), where '$r$' represents the average duration of this effective cross-protection.
+            \end{itemize}
+        \item \textbf{Generally Non-Fatal Nature of Mild Dengue}: While severe Dengue can lead to complications and mortality, classical Dengue fever is often self-limiting, with most individuals recovering within one to two weeks (\url{https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue}).
+    \begin{itemize}
+        \item \textit{Mathematical Representation}: The model structure for hosts ($S_H, I_H, R_H$) inherently supports this. Infected individuals ($I_H$) transition to the recovered class ($R_H$) (term $+\frac{I_H}{d}$ in $\frac{dR_H}{dt}$). There is no explicit term for disease-induced death from the $I_H$ compartment, implying a constant total host population $N_H$.
+        \item \textit{Alignment with Model Assumptions}: This characteristic aligns well with \textbf{Model Assumption 1} ("every host is able to recover from the illness...").
+    \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Realistic estimates}
+
+\subsection*{Non-dimensionalization}
+
+With the system of equations defined in [Dorottya's equations], we can define the independent and dependent quantities as described in [Dorrotya's part]:
+
+\begin{equation}
+(S_H \,\mathrm{[p]}, I_H \,\mathrm{[p]}, S_V \,\mathrm{[m]}, I_V \,\mathrm{[m]}, R_H \,\mathrm{[p]}) = f(t \,\mathrm{[d]}, N_H \,\mathrm{[p]}, N_V \,\mathrm{[m]}, \beta_H \, \mathrm{[d^{-1}]}, \beta_{V} \, \mathrm{[d^{-1}]}, r \, \mathrm{[d]}, d \, \mathrm{[d]}  )
+\label{independent quantities}
+\end{equation}
+
+where the symbols in square brackets represent the units ($\mathrm{[p]}$,  $\mathrm{[m]}$, and $\mathrm{[d]}$ stand for the number of people, mosquitos, and days respectively). \footnote{Also note that in \cref{independent quantities} one of the independent variables is not truly independent since we can add the condition that $N_H + N_V = S_H + I_H + R_H + I_V + S_V = const.$, but that does not influence the analysis in any way here.} From \cref{independent quantities} we choose the set of dimensionally independent quantities as $\{N_H \,\mathrm{[p]}, N_V\,  \mathrm{[m]}, d \, \mathrm{[days]}\}$, and non-dimensionalise the variables in \cref{independent quantities} to obtain:
+\begin{equation}
+(s_h, i_h, s_v, i_v, r_v) = f(\tau, b_h, b_v, \rho)
+\label{nondim quants}
+\end{equation}
+
+such that 
+
+\begin{equation}
+s_k = \frac{S_k}{N_k}, \quad i_k = \frac{I_k}{N_k}, \quad r_h = \frac{R_H}{N_H}, \quad \tau = \frac{t}{d}, \quad b_h = \beta_H d, \quad b_v = \beta_Vd, \quad \rho = \frac{r}{d}, \quad k \in \{H,V\}    
+\end{equation}
+
+
+substituting this into the original system from [dorottyas system] changes it to 
+
+\begin{equation}
+\left\{
+\begin{aligned}
+\displaystyle
+\frac{ds_h}{d\tau} &= \dfrac{r_h}{\rho} \;-\; b_h\,s_h\,i_v,\\[1ex]
+\frac{di_h}{d\tau} &= b_h\,s_h\,i_v \;-\; i_h,\\[1ex]
+\frac{dr_h}{d\tau} &= i_h \;-\; \dfrac{r_h}{\rho},\\[1ex]
+\frac{ds_v}{d\tau} &= -\,b_v\,i_h\,s_v,\\[1ex]
+\frac{di_v}{d\tau} &= b_v\,i_h\,s_v.
+\end{aligned}
+\right.
+\end{equation}
+
+and using the fact that
+\begin{equation}
+\left\{
+\begin{aligned}
+        &s_h + i_h +r_h = 1 \\
+        &s_v + i_v = 1
+\end{aligned}
+\right.
+\end{equation}
+
+since two more variables become dependent, we can simplify the system of equations to: 
+
+\begin{equation}
+\left\{
+\begin{aligned}
+\frac{ds_h}{d\tau}
+  &= \dfrac{1 - s_h - i_h}{\rho}
+   - b_h\,s_h\,i_v,\\[0.5ex]
+\frac{di_h}{d\tau}
+  &= b_h\,s_h\,i_v
+   - i_h,\\[0.5ex]
+\frac{di_v}{d\tau}
+  &= b_v\,i_h\,(1 - i_v).
+\end{aligned}
+\right.
+\end{equation}
+
+% - Now that you have formulated a more realistic mathematical model, apply the theoretical
+% concepts you learn in the course to investigate the behavior of the system.
+% - When you apply the theoretical concepts and principles to your model, make sure to state it
+% in your report! (E.g., “Applying Theorem X.Y to our model, ...”). This will be viewed very
+% favorably when evaluating your report.
+% - Here are some questions that might help you in your analysis:
+
+% o (Tim) What are the possible equilibria of the model?
+% o Can you find first integrals or Lyapunov functions for your model?
+% o (Maya) Can you find invariant subsets of the state space?
+% o (Daan) Can you show global existence of solutions or blowup in finite time?
+% o Are there values of the system parameters for which the system has a stationary solution in
+% the interior of the positive octant?
+% o Can you say something about the stability of such a stationary solution?
+% o What can you say about the stability of the disease-free equilibrium?
+% o Are there solutions that correspond to an endemic equilibrium?
+% Can you adjust the problem such that it does?
+
+% - Show by means of calculations how the system behaves. You should feel free to use built-in
+% functions in mathematical software. (Note: If you think you will need some assistance in
+% programming from the instructors or lecturers, you should use either Matlab or Mathematica.
+% Otherwise, you should feel free to use other software packages such as Python.)
+

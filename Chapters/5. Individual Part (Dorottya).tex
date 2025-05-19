@@ -1,0 +1,50 @@
+\section{Individual Part: Dorottya Vaczy - Immunity} \label{group}
+
+For many diseases, once a person is infected, their immune system produces antibodies. This response of the body provides them immunity. Therefore, in my extension, I introduce immunity of hosts. In addition, I assume that they lose immunity after some time and become susceptible again, since immunity usually does not last forever.
+
+\subsection*{Model Variables}
+
+\begin{itemize}
+    \item $S_H, I_H, S_V, I_V$ from the original SI-SI model described in section \ref{introduction}
+    \item $R_H$: number of recovered and \textbf{immune} hosts
+\end{itemize}
+
+\subsection*{Model parameters}
+
+\begin{itemize}
+    \item $P_{V->H}, P_{H->V}, \beta_H, \beta_V$ from the original SI-SI model described in section \ref{introduction}
+\end{itemize}
+
+\subsection*{Assumptions}
+
+\begin{itemize}
+    \item every host is able to recover from the illness and then they gain immunity; thus, the host population can be written as $N_H = S_H + I_H + R_H$
+    \item as mosquitoes have a short lifespan, assume that they do not recover from the illness; thus, vector population remains $N_V = S_V + I_V$
+    \item $S_H$ gets infected by $I_V$ and $S_V$ by $I_H$
+    \item an infected person is infected for $d$ days in average
+    \item a recovered person loses immunity after $r$ days in average and becomes susceptible again
+\end{itemize}
+
+With the help of the defined variables and parameters, we can express the number of new infected hosts as $\beta_H \frac{I_V}{N_V} S_H$. The number of new recovered hosts can be written as $\frac{I_H}{d}$ and the number of new susceptible hosts as $\frac{R_H}{r}$.
+
+Regarding the vectors, the number of new infected vectors is $\beta_V \frac{I_H}{N_H} S_V$.
+
+\subsection*{System of Equations}
+
+We have defined the number of individuals moving from one compartment to another. Thus, we can model the dynamics of the system as follows.
+
+\begin{equation}
+    \frac{dS_H}{dt} = \frac{R_H}{r} - \beta_H \frac{I_V}{N_V} S_H
+\end{equation}
+\begin{equation}
+    \frac{dI_H}{dt} = \beta_H \frac{I_V}{N_V} S_H - \frac{I_H}{d}
+\end{equation}
+\begin{equation}
+    \frac{dR_H}{dt} = \frac{I_H}{d} - \frac{R_H}{r}
+\end{equation}
+\begin{equation}
+    \frac{dS_V}{dt} = -\beta_V \frac{I_H}{N_H} S_V
+\end{equation}
+\begin{equation}
+    \frac{dI_V}{dt} = \beta_V \frac{I_H}{N_H} S_V
+\end{equation}

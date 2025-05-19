@@ -1,0 +1,34 @@
+\section{Individual Part: Daan Portier --- Host-to-Host Transmission}
+The basic SI-SI model for vector-borne diseases does not account for diseases where it may also be possible for hosts to infect other hosts directly. In this section, we extend the model to account for such diseases by incorporating host-to-host transmission.
+
+\subsection*{Model Parameters}
+\begin{itemize}
+    \item $P_{H \to H}$: probability of an interaction between en infected host and a susceptible host resulting in transmission.
+    \item $\iota$: the average number of host-host interactions per host per unit time.
+    \item $\zeta$: host-to-host transmission rate defined by ~(\ref{hth-def-rate})
+\end{itemize}
+Note moreover that in this section we use the other parameters already defined by the standard SI-SI model as defined in section ~\ref{introduction}.
+
+\subsection*{Assumptions}
+On top of the assumptions made by the standard SI-SI model as in section \ref{SISI-assumptions}, this extension requires that the number of host-host interactions and the infection probability can be modelled as a constants.
+These assumptions are in line with the assumptions made by the standard SI-SI model of constant 
+host-vector interactions and infection probability.
+\\\\
+Let $P_{H \to H} \in [0,1]$ be the probability that an interaction between an
+infected host and a susceptible host results in transmission.
+Let $\iota \in \mathbb{R}$ denote the average number of host-host
+interactions per host per unit time (e.g., per day). 
+Note that, since $\iota$ is the average number of host-host interactions \emph{per host},
+$\frac{\iota}{2}N_H$ denotes the total number of host-host interactions per unit time.
+We define the host-to-host transmission rate as
+\begin{equation}\label{hth-def-rate}
+    \zeta := \frac{\iota}{2} N_H P_{H \to H}.
+\end{equation}
+Then, the extended SI-SI model becomes:
+\begin{align*}
+    \frac{dS_V}{dt} &= -\beta_V \frac{I_H}{N_H} S_V, \\
+    \frac{dI_V}{dt} &= \beta_V \frac{I_H}{N_H} S_V, \\
+    \frac{dS_H}{dt} &= -\beta_H \frac{I_V}{N_V} S_H - \zeta \frac{I_H}{N_H} S_H, \\
+    \frac{dI_H}{dt} &= \beta_H \frac{I_V}{N_V} S_H + \zeta \frac{I_H}{N_H} S_H.
+\end{align*}
+We can interpret this extended model much the same as the standard SI-SI model when it comes to the parts they have in common. The additional terms can interpreted as the rate at which, additionally to the vector-host transmisions this desease spreads amongst hosts.
