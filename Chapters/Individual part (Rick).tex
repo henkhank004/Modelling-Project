@@ -2,22 +2,22 @@
 \section{Individual part - Rick Scheffer - Migration}
 Something that could also influence the spread of a vector-borne disease, is migration. People can enter or leave the population. That's why I introduce the following extended model, which accounts for migration patterns.
 
-\subsection{Assumptions and explanation}
+\subsection{Assumptions}
 Let $M = M_I - M_O$ be the net number of people migrating to the population. Here $M_I$ denotes the number of people going in, and $M_O$ the number of people going out. So a positive $M$ means there are more people entering, and a negative $M$ means there are more people leaving. \\\\
 
-\noindent This model makes a few assumptions. First of all, $M$ only applies to hosts (people) and not to vectors (mosquito's). We also assume mosquito's exist only within this population in a certain area, and that they don't leave the population. In short, the model only considers migration for people. \\\\
+\noindent This model makes a few assumptions. First of all, $M$ only applies to hosts (people) and not to vectors (mosquito's). We also assume mosquito's exist only within this population in a certain area, and that they don't leave the population. In short, the model only considers migration for people. We also assume $M$ to be constant over time. If we make $M$ time dependent, then there would be some pattern to the number of people entering and leaving (for instance, it increases or decreases linearly, quadratically, or exponentially, or it goes up and down like a cosine/sine function). But here, we assume the number of migrants per time unit is random, but stays close to a certain amount. This is much easier to model by making $M$ constant.  \\\\
 
-\noindent This model also assumes that people entering can only be susceptible, and people leaving can either be susceptible or infected. This assumes people cannot enter the population already infected with the exact same disease plaguing the population. This means we let $M_O = SM_O + IM_O$, where $SM_O$ means number of susceptible people leaving and $IM_O$ means number of infected people leaving. \\\\
-
-\noindent For the hosts, these migration parameters affect the number of susceptible hosts. We just add the number of people entering ($M_I$) to and subtract the number of susceptible people leaving ($SM_O$) from $S_H$, and multiply that with $\beta_H(\frac{I_V}{N_V})$. For the vectors, it affects the term $\frac{I_H}{N_H}$. To the population of hosts $N_H$, we just add $M = M_I - M_O$ as a whole, and from the infected part $I_H$, we only subtract the number of infected people leaving ($IM_O$). 
+\noindent This model also assumes that people entering can only be susceptible, and people leaving can either be susceptible or infected. This assumes people cannot enter the population already infected with the exact same disease plaguing the population. This means we let $M = M_I - (M_{O,S} + M_{O,I})$, where $M_{O,S}$ means number of susceptible people leaving and $M_{O,I}$ means number of infected people leaving. \\\\
 
 \subsection{Model}
+\noindent For the hosts, these migration parameters affect the number of susceptible hosts. We just add the number of people entering ($M_I$) to and subtract the number of susceptible people leaving ($M_{O,S}$) from $S_H$, and multiply that with $\beta_H(\frac{I_V}{N_V})$. For the vectors, it affects the term $\frac{I_H}{N_H}$. To the population of hosts $N_H$, we just add $M = M_I - M_O$ as a whole, and from the infected part $I_H$, we only subtract the number of infected people leaving ($M_{O,I}$). Thus, we obtain the following set of equations:
+
 \[
 \begin{aligned}
-    {S_H}' = - \beta_H(\frac{I_V}{N_V})(S_H + M_I - SM_O) \\
-    {I_H}' = \beta_H(\frac{I_V}{N_V})(S_H + M_I - SM_O) \\
-    {S_V}' = - \beta_V(\frac{I_H - IM_O}{N_H + M_I - M_O})S_V \\
-    {I_V}' = \beta_V(\frac{I_H - IM_O}{N_H + M_I - M_O})S_V
+    {S_H}' = - \beta_H(\frac{I_V}{N_V})(S_H + M_I - M_{O,S}) \\
+    {I_H}' = \beta_H(\frac{I_V}{N_V})(S_H + M_I - M_{O,S}) \\
+    {S_V}' = - \beta_V(\frac{I_H - M_{O,I}}{N_H + M_I - M_O})S_V \\
+    {I_V}' = \beta_V(\frac{I_H - M_{O,I}}{N_H + M_I - M_O})S_V
 \end{aligned}
 \]
 

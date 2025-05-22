@@ -1,0 +1,79 @@
+\section{Solutions} % title will be refined
+
+In this section we will prove the existence and uniqueness of a global solution to the model
+as defined by \ref{model}. To do this we will use various theorems from the lecture notes for the
+course 2MBC20 by G. Prokert \cite{lecturenotes}.
+
+Note that one may rewrite the equations from \ref{model}, using $x(t) := (s_h(t), i_h(t), i_v(t))^{\top}$ in the vector form form
+\begin{equation} \label{vec-model}
+    \frac{dx}{d\tau}(\tau) = \begin{bmatrix}
+        \frac{1 - s_h(\tau) - i_h(\tau)}{\rho} - b_h s_h(\tau) i_b(\tau) \\
+        b_h s_h(\tau) i_v(\tau) - i_h(\tau) \\
+        b_h i_h(\tau)(1 - i_v(\tau))
+    \end{bmatrix}
+    =: f(\tau,x) = \begin{bmatrix}
+        f_1(\tau,x) \\ f_2(\tau, x) \\ f_3(\tau, x)
+    \end{bmatrix}.
+\end{equation}
+
+
+\subsection{Existence of a solution}
+By the Picard-Lindel\"{o}f theorem, to show that there exists an interval on which a unique solution exists, it suffices to show that $f$ is continuous in the first argument and locally Lipschitz continuous in the second argument \cite{lecturenotes}.
+Indeed, note that $f$ does not explicitly depend on the first argument and hence is trivially continuous.
+Moreover, to show that $f$ is locally Lipschitz continuous in the second argument, it suffices to show that $f$ is continuously differentiable in the second argument \cite{lecturenotes}.
+It is immediate from the definition of $f$ that it is at least differentiable as the component functions are linear combinations of the differentiable functions $i_h,i_v,s_h$.
+We note that $(D_2f) = [D_2f]$ defined as \[
+    [D_2f](\tau,x) = \begin{bmatrix}
+          \frac{\partial f_1}{\partial x_1}(\tau,x)
+        & \frac{\partial f_1}{\partial x_2}(\tau,x)
+        & \frac{\partial f_1}{\partial x_3}(\tau,x)
+        \\
+          \frac{\partial f_2}{\partial x_1}(\tau,x)
+        & \frac{\partial f_2}{\partial x_2}(\tau,x)
+        & \frac{\partial f_2}{\partial x_3}(\tau,x)
+        \\
+          \frac{\partial f_3}{\partial x_1}(\tau,x)
+        & \frac{\partial f_3}{\partial x_2}(\tau,x)
+        & \frac{\partial f_3}{\partial x_3}(\tau,x)
+    \end{bmatrix}
+\]
+hence, \begin{equation}
+    (D_2f)(\tau,x) = [D_2f](\tau,x) = \begin{bmatrix}
+        - \frac{1}{\rho} - b_h i_v(\tau) & - \frac{1}{\rho} & -b_h s_h(\tau) \\
+        b_h i_v(\tau) & -1 & b_h s_h(\tau) \\
+        0 & b_h(1 - i_v(\tau)) & -b_h i_h(\tau)
+    \end{bmatrix}
+\end{equation}
+To show that this is continuous, it suffices to show that each entry is continuous.
+Note that $s_h,i_h,i_v$ are continuous maps.
+Moreover, each entry is either one of these continuous maps multiplied by a constant or added to a constant -- hence continuous -- or itself a constant, thus trivially continuous.
+We therefore
+find that $f$ is indeed continuously differentiable in the second argument and we thus conclude
+that $f$ is locally Lipschitz continuous in the second argument.
+Moreover, because of this result we conclude by the Picard-Lindel\"{o}f theorem that there
+exists an interval on which there exists a unique solution to \ref{model}.
+
+\subsection{Solution Globality}
+Now that we know a solution exists, we move to showing that in fact a unique global solution exists.
+To show that there exists a global solution to any IVP created from \ref{model} it suffices to show that $f$ as defined in \ref{vec-model} grows linearly \cite{lecturenotes}.
+Note that $0 \leq s_h + i_h \leq 1$ by definition of $s_h$ and $i_h$.
+Hence find the following bounds for the component functions of $f$
+\begin{align*}
+    |f_1(\tau,x)| &= \left| \frac{1 - s_h(\tau) - i_h(\tau)}{\rho} - b_h s_h(\tau)i_h(\tau)\right|
+                \leq \frac{1}{\rho} + b_h\\
+    |f_2(\tau,x)| &= |b_h s_h(\tau) i_v(\tau) - i_h(\tau) |
+                \leq b_h + 1\\
+    |f_3(\tau,x)| &= |b_h i_h(\tau)(1 - i_v(\tau))| 
+                \leq b_h
+\end{align*}
+Thus,
+\begin{equation*}
+    \| f(\tau,x) \|_2 \leq \sqrt{\left(\frac{1}{\rho} + b_k\right)^2 + (b_h+1)^2 + b_v^2} =:\beta \in \mathbb{R}.    
+\end{equation*}
+Therefore we can take $\alpha(t) \equiv 0$ and $\beta(t) \equiv \beta$ to find that
+\begin{equation*}
+    \| f(\tau,x) \|_2 \leq 0 \cdot \|x\|_2 + \beta = \alpha(\tau)\|x\|_2 + \beta(\tau).
+\end{equation*}
+Therefore we conclude that for any ODE formed from \ref{model} the maximal solution is in fact global.
+\\\\
+Since we have that for any IVP formed from \ref{model} there exists a unique solution on some interval and there exists a global solution, we can conclude that, in particular, there exists a unique global solution to any IVP formed from \ref{model} \cite{lecturenotes}. \qed

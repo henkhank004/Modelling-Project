@@ -4,11 +4,17 @@
 In the standard SI-SI model, many assumptions are made that are not realistic. I will propose a modified version of the SI-SI model taking into account the birth-and-death rate of humans. This modified model will be slightly more realistic compared to the original SI-SI model.
 
 \subsection*{Assumptions}
-See 1.1.1
-Extra:
-For the proposed model, we assume that babies are born without disease and that both infected and susceptible people can die. To simulate the birth-and-death rate of humans in the model, we will denote the number of births on day $t$ by $B(t)$. We will split the number of deaths into deaths of people who are infected on day $t, D_I(t)$ and those who are susceptible on day $t, D_S(t)$. All three of these functions are a function of time and affect the number of total hosts. We get $N_H(t)=S_H(t) + I_H(t) + B(t)-D_I(t) -D_S(t)$ for the number of humans. The number of vectors is not affected by the birth-and-death rate of humans and therefore, $N_V = S_V(t) + I_V(t)$. Let $\gamma N_H(t)$ equal the number of bites of vectors on day $t$ per vector. Then the total number of bites of vectors on day $t$ is $N_V \gamma N_H(t)$. We let $P_{V\rightarrow H}$ be the probability that a single bite from an infected vector infects a susceptible human and $P_{H\rightarrow V}$ the probability that a susceptible vector gets infected by a bite from an infected human. The total number of times a person is bitten can be expressed as $N_V \gamma$.  We let $\beta_H = \gamma N_V P_{V\rightarrow H}$. We can express the total number of new infected hosts per time unit as $\beta_H \frac{I_V}{N_V} S_H$. We do the same for vectors. Let $\beta_V = \gamma N_H(t) P_{H\rightarrow V}$. Then the total number of new infected vectors per time unit is $\beta_V \frac{I_H}{N_H(t)} S_V$. This leads to the following system of ODEs:
+We will be using the same assumptions as in 1.1.1, but now we also model the birth-and-death rate for the total population. To do this we assume that:
+\begin{itemize}
+ \item The birth rate is proportional the total population. 
+ \item The death rate of infected people is proportional to the number of infected people.
+ \item The death rate of susceptible people is proportional to the number of susceptible people.
+ \item The total population stays constant.
+\end{itemize}
+\subsection*{model}
+To simulate the birth-and-death rate of humans in the model, we will denote the number of births per day by $$B = aN_H$$, where $a$ is a constant. We will split the number of deaths into deaths of people who are infected and people who are susceptible. Let the number of deaths of infected people on day, $t$ be $$D_I(t) = b I_H(t)$$ and of those who are susceptible on day $t$, $$D_S(t) = cS_H(t)$$, where both b and c are constants. We  get $$N_H=S_H(t) + I_H(t) + B-D_I(t) -D_S(t)$$ for the total population. This gives rise to the following system of ODE's:
 \begin{equation}
-S_H'(t) = B(t) -\beta_H \frac{I_V}{N_V} S_H - D_S(t) 
+S_H'(t) = B -\beta_H \frac{I_V}{N_V} S_H - D_S(t) 
 \end{equation}
 \begin{equation}
 I_H'(t) = \beta_H \frac{I_V}{N_V} S_H - D_I(t)

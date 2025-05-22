@@ -15,19 +15,19 @@ Where $S_H$, $S_V$ mean susceptible population of vectors and hosts and $I_H, I_
 %This model intuitively makes sense since a population composed of a greater fraction of, say, rarely-interacting hosts or vectors will, on average, yield lower host-vector contact rate $\gamma$, than the population with more frequently-interacting members. 
 
 Note that we can define individual rates to be a constant parameter or a function. For the latter, more interesting case we will assume that the host 
-(or vector) population is composed of "intelligent" individuals who "keep track" of the number of infections of their kind and limit interactions when the number of infected are too high. The decrease in the rate constant will be described in an exponential fashion inspired by the Arrhenius equation from chemical kinetics:
+(or vector) population is composed of "intelligent" individuals who "keep track" of the number of infections of their kind and limit interactions when the number of infected are too high. The decrease in the rate constant will be described in an exponential fashion inspired by the Arrhenius equation from chemical kinetics [ref]:
 
 \begin{equation}
 \gamma_i(t) = \gamma_{i, 0}\left(1 - \exp{\left({-\frac{A_i}{p_i(t)}}\right)} \right)
 \end{equation}
 
-where $p_i(t)$ is an individual "perception function" describing how noticeable a given number of infections is, and $A_i$ is an individual constant (dimensionless) modifying the strength of the rate-decreasing behaviour. We can express the change in $p(t)$ using  Weber-Fechner law [ref] and use the chain rule to obtain explicit time dependence:
+where $p_i(t)$ is an individual "perception function" describing how noticeable a given number of infections is, and $A_i$ is an individual constant (dimensionless) modifying the strength of the rate-decreasing behaviour. We can express the change in $p_i(t)$ using  Weber-Fechner law [ref] and use the chain rule to obtain explicit time dependence:
 
 \begin{equation}
     \frac{\mathrm{d}p_i}{\mathrm{d}I}  = \frac{\alpha}{I} = \frac{\mathrm{d}p_i}{\mathrm{d}t}\cdot \frac{\mathrm{d}t}{\mathrm{d}I} \quad \Longrightarrow \quad \frac{\mathrm{d}p_i}{\mathrm{d}t} = \frac{\alpha_i}{I}\frac{\mathrm{d}I}{\mathrm{d}t} 
 \end{equation}
 
-where $I$ is the number of infected in either host's or vector's population, and $\alpha>0$ is a dimensionless proportionality constant describing how sensitive host's or vector's perception is to a change in the number of infections. For simplicity, we will assume that $p(t)$ is the same for infected and susceptible individuals, which only adds two equations to our system: 
+where $I$ is the number of infected in either host's or vector's population, and $\alpha_i>0$ is a dimensionless proportionality constant describing how sensitive host's or vector's perception is to a change in the number of infections. For simplicity, we will assume that $p_i$ is the same for infected and susceptible individuals, which only adds two equations to our system: 
 
 \begin{equation}
 \left\{
